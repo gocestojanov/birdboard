@@ -45,4 +45,10 @@ class ProjectsController extends Controller
 
         return view('project.show', compact('project'));
     }
+
+    public function create()
+    {
+        return view('project.create');
+    }
+
 }
