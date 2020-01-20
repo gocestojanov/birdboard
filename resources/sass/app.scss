@@ -19,3 +19,17 @@
 @tailwind components;
 
 @tailwind utilities;
+
+// @import "tailwindcss/base";
+// @import "./custom-base-styles.css";
+
+// @import "tailwindcss/components";
+// @import "./custom-components.css";
+
+// @import "tailwindcss/utilities";
+// @import "./custom-utilities.css";
+
+.button {
+    @apply .bg-blue-300 .text-white .rounded-lg .text-xs .py-2 .px-5;
+    box-shadow: 0 2px 7px 0 #b0eaff;
+}
