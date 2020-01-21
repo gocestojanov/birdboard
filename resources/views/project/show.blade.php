@@ -23,7 +23,6 @@
 
                     <div class="card mb-3">Lorem Ipsum</div>
                     <div class="card mb-3">Lorem Ipsum</div>
-                    <div class="card mb-3">Lorem Ipsum</div>
                     <div class="card ">Lorem Ipsum</div>
 
                 </div>
