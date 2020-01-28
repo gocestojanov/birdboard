@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Symfony\Component\Console\Helper\Table;
 
 class CreateTasksTable extends Migration
 {
@@ -17,6 +18,7 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('project_id');
             $table->text('body');
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }
