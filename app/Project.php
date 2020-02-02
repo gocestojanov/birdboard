@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Project extends Model
 {
-    public $fillable = ['title', 'description','owner_id'];
+    public $fillable = ['title', 'description', 'notes', 'owner_id'];
 
 
     public function path()
