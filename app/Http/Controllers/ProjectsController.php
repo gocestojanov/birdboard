@@ -15,14 +15,24 @@ class ProjectsController extends Controller
         return view('project.index', compact('projects'));
     }
 
-    public function store()
+    protected function validation()
     {
-
         $attributes = request()->validate([
             'title' => 'required',
             'description' => 'required',
             'notes' => 'max:255'
         ]);
+
+        return $attributes;
+        
+    }
+
+
+    public function store()
+    {
+
+
+        $attributes = $this->validation();    
 
         $attributes['owner_id'] = auth()->id();
 
@@ -37,6 +47,12 @@ class ProjectsController extends Controller
 
     }
 
+    public function edit(Project $project)
+    {   
+        return view('project.edit',compact('project'));
+    }
+
+
     public function update(Project $project)
     {
         // if (auth()->user()->isNot($project->owner) ) {
@@ -45,10 +61,9 @@ class ProjectsController extends Controller
         
        $this->authorize('update', $project);     
 
+       $attributes = $this->validation();
 
-        $project->update([
-            'notes' => request('notes') 
-        ]);
+        $project->update($attributes);
 
         return redirect($project->path());
 
