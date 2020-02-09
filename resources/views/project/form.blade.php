@@ -5,7 +5,7 @@
         <label for="title" class="label">Title</label>
 
         <div class="control">
-                <input type="text" name="title" id="" class="input" 
+                <input type="text" name="title" id="" class="input"
                 placeholder="Title"
                 value="{{ $project->title }}" required>
         </div>
@@ -32,7 +32,7 @@
     </div>
 
 
-@if ($errors->any())        
+@if ($errors->any())
     <div class="field mt-6">
             @foreach ($errors->all() as $error)
                 <li class="text-small text-red-600">{{ $error }}</li>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -18,13 +19,13 @@ class ProjectsController extends Controller
     protected function validation()
     {
         $attributes = request()->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title' => 'sometimes|required',
+            'description' => 'sometimes|required',
             'notes' => 'max:255'
         ]);
 
         return $attributes;
-        
+
     }
 
 
@@ -32,7 +33,7 @@ class ProjectsController extends Controller
     {
 
 
-        $attributes = $this->validation();    
+        $attributes = $this->validation();
 
         $attributes['owner_id'] = auth()->id();
 
@@ -48,27 +49,36 @@ class ProjectsController extends Controller
     }
 
     public function edit(Project $project)
-    {   
+    {
         return view('project.edit',compact('project'));
     }
 
 
-    public function update(Project $project)
+    // public function update(Project $project)
+    // {
+    //     // if (auth()->user()->isNot($project->owner) ) {
+    //     //     abort(403);
+    //     // }
+
+    //    $this->authorize('update', $project);
+
+    //    $attributes = $this->validation();
+
+    //     $project->update($attributes);
+
+    //     return redirect($project->path());
+
+    // }
+
+    public function update( UpdateProjectRequest $request, Project $project)
     {
-        // if (auth()->user()->isNot($project->owner) ) {
-        //     abort(403);
-        // }
-        
-       $this->authorize('update', $project);     
 
-       $attributes = $this->validation();
 
-        $project->update($attributes);
+        $project->update($request->validated());
 
         return redirect($project->path());
 
     }
-
 
     public function show(Project $project)
     {
@@ -77,7 +87,7 @@ class ProjectsController extends Controller
         //     abort(403);
         // }
 
-        $this->authorize('update', $project);     
+        $this->authorize('update', $project);
 
 
         return view('project.show', compact('project'));

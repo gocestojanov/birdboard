@@ -36,7 +36,7 @@ class ManageProjectsTest extends TestCase
 
         $project = Project::where($attributes)->first();
 
-        // dd($project);    
+        // dd($project);
 
         $response->assertRedirect($project->path());
 
@@ -45,9 +45,9 @@ class ManageProjectsTest extends TestCase
 
         $this->get($project->path())
                 ->assertSee($attributes['title'])
-                ->assertSee($attributes['description']) 
+                ->assertSee($attributes['description'])
                 ->assertSee($attributes['notes']);
-            
+
     }
 
     /** @test */
@@ -64,16 +64,32 @@ class ManageProjectsTest extends TestCase
         $project = ProjectFactory::create();
 
         $this->actingAs($project->owner)->patch($project->path(), [
-               'title' => 'Changed', 
-               'description' => 'Changed', 
+               'title' => 'Changed',
+               'description' => 'Changed',
                'notes' => 'changed'
         ])->assertRedirect($project->path());
 
-        $this->get($project->path() . '/edit')->assertOk();    
+        $this->get($project->path() . '/edit')->assertOk();
 
 
         $this->assertDatabaseHas('projects', ['notes' => 'changed' ]);
     }
+
+    /** @test */
+    public function a_user_can_update_a_projects_general_notes()
+    {
+        $project = ProjectFactory::create();
+
+        $this->actingAs($project->owner)->patch($project->path(), [
+            'notes' => 'changed'
+        ]);
+
+        // $this->get($project->path() . '/edit')->assertRedirect('login');
+
+        $this->assertDatabaseHas('projects', ['notes' => 'changed' ]);
+
+    }
+
 
 
 
@@ -92,7 +108,7 @@ class ManageProjectsTest extends TestCase
         $project = ProjectFactory::create();
 
 
-        $this->actingAs($project->owner) 
+        $this->actingAs($project->owner)
             ->get($project->path())
             ->assertSee($project->title)
             ->assertSee($project->description);
