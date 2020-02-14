@@ -21,4 +21,31 @@ class Task extends Model
         return "/projects/{$this->project->id}/tasks/{$this->id}";
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($task)
+        {
+            Activity::create( [
+                'project_id' => $task->project->id ,
+                'description' => 'created_taks',
+            ] );
+        });
+
+
+        static::updated(function ($task)
+        {
+            if (! $task->completed) {
+                return;
+            }
+
+            Activity::create( [
+                'project_id' => $task->project->id ,
+                'description' => 'completed_task',
+            ] );
+        });
+    }
+
+
 }
